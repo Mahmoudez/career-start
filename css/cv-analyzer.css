@@ -60,4 +60,18 @@
 .cv-meter-track { height: 8px; overflow: hidden; border-radius: 99px; background: #0b142b; }
 .cv-meter-track span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #38bdf8, #34d399); }
 .cv-build-link { display: inline-flex; margin-top: 1rem; padding: .75rem 1rem; border-radius: 9px; background: #0284c7; color: #fff; font-weight: 700; text-decoration: none; }
+.cv-analyzer-heading { margin-bottom: 1.5rem; }
+#cvAnalyzerForm { display: flex; flex-direction: column; align-items: stretch; gap: .75rem; width: 100%; text-align: right; }
+#cvAnalyzerForm > label { display: block; margin: .35rem 0 0; color: #e2e8f0; font-weight: 600; line-height: 1.5; }
+#cvTargetField, #cvTextInput { display: block; box-sizing: border-box; width: 100%; max-width: 100%; margin: 0; padding: .85rem 1rem; border: 1px solid #475569; border-radius: 10px; background: #0b142b; color: #f8fafc; font: inherit; text-align: right; }
+#cvTargetField { min-height: 48px; }
+#cvTargetField option { background: #0b142b; color: #f8fafc; }
+#cvTextInput { min-height: 180px; resize: vertical; line-height: 1.7; }
+#cvTextInput::placeholder { color: #94a3b8; }
+.cv-upload-area { box-sizing: border-box; width: 100%; min-height: 170px; margin: 0; align-content: center; line-height: 1.55; }
+.cv-upload-area > strong, .cv-upload-area > span:not(.cv-upload-icon) { display: block; }
+.cv-privacy-note { margin: -.15rem 0 .25rem; line-height: 1.6; }
+.cv-form-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: .75rem; color: #94a3b8; font-size: .8rem; line-height: 1.5; }
+#analyzeCvBtn { align-self: flex-start; margin-top: .25rem; }
+@media (max-width: 640px) { .cv-form-meta { flex-direction: column; gap: .25rem; } #analyzeCvBtn { width: 100%; } .cv-upload-area { padding: 1.1rem; } }
 @media (max-width: 640px) { .cv-score-meters { grid-template-columns: 1fr; } }
