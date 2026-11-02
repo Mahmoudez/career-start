@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0b1329">
+    <title>اكتشف مسارك | Career Start</title>
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/quiz.css">
+    <script src="../js/quiz.js" defer></script>
+</head>
+<body>
+    <div class="bg-decorations" aria-hidden="true"><div class="glow-orb orb-1"></div><div class="glow-orb orb-2"></div><div class="grid-overlay"></div></div>
+    <header class="navbar">
+        <a href="../index.html" class="brand-link"><img src="../assets/logo.png" alt=""><span>Career Start <strong>AI</strong></span></a>
+        <nav aria-label="التنقل الرئيسي">
+            <a href="../index.html">الرئيسية</a><a href="quiz.html" aria-current="page">اكتشف مسارك</a>
+            <a href="roadmaps.html">خرائط التعلّم</a><a href="interview.html">تدريب المقابلات</a>
+        </nav>
+    </header>
+    <main class="quiz-main">
+        <section class="quiz-card" aria-labelledby="quiz-title">
+            <div class="quiz-heading"><span class="quiz-eyebrow">اختبار الاهتمامات والمهارات</span>
+                <h1 id="quiz-title">اكتشف المجال الأقرب إليك</h1>
+                <p>اختر الإجابة التي تعبّر عنك، واكتشف المسار الأنسب لاهتماماتك.</p>
+            </div>
+            <div id="quizStatus" class="quiz-status" role="status" aria-live="polite">جارٍ تحميل الأسئلة…</div>
+            <div id="quizContent" hidden>
+                <div class="quiz-progress-row"><span id="progressLabel"></span><span id="progressPercent"></span></div>
+                <div class="quiz-progress" role="progressbar" aria-label="تقدم الاختبار" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="progressBar"></span></div>
+                <fieldset class="question-block">
+                    <legend id="questionText"></legend>
+                    <div id="answerList" class="answer-list"></div>
+                </fieldset>
+                <div class="quiz-actions"><button id="backButton" class="quiz-button secondary" type="button">السابق</button><button id="nextButton" class="quiz-button primary" type="button" disabled>التالي</button></div>
+            </div>
+            <section id="quizResult" class="quiz-result" aria-live="polite" hidden></section>
+        </section>
+    </main>
+    <footer><p>© 2026 جميع الحقوق محفوظة - منصة Career Start</p></footer>
+</body>
+</html>
