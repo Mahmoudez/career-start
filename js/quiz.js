@@ -167,7 +167,7 @@ function generateRecommendations(name, governorate, workEnv, jobType, interest) 
                 label.append(input, text);
                 answerList.append(label);
             });
-            const percent = Math.round(((current + 1) / questions.length) * 100);
+            const percent = current * 10;
             progressBar.style.width = `${percent}%`;
             progress.setAttribute('aria-valuenow', String(percent));
             progressLabel.textContent = `السؤال ${current + 1} من ${questions.length}`;
