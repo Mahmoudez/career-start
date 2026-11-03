@@ -90,3 +90,24 @@
         }
     });
 })();
+document.addEventListener('DOMContentLoaded', () => {
+    const floatBtn = document.getElementById('floatingChatBtn');
+    const floatModal = document.getElementById('floatingModal');
+    const closeFloatBtn = document.getElementById('closeFloatBtn');
+
+    if (floatBtn && floatModal) {
+        floatBtn.addEventListener('click', () => {
+            if (floatModal.style.display === 'none' || floatModal.style.display === '') {
+                floatModal.style.display = 'block';
+            } else {
+                floatModal.style.display = 'none';
+            }
+        });
+    }
+
+    if (closeFloatBtn && floatModal) {
+        closeFloatBtn.addEventListener('click', () => {
+            floatModal.style.display = 'none';
+        });
+    }
+});

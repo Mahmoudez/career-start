@@ -537,3 +537,77 @@ footer {
     line-height: 1.55;
     margin: 0;
 }
+/* تنسيق الزرار العائم بحجم صغير وتوهج ناعم */
+.floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #2563eb;
+    color: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+    cursor: pointer;
+    z-index: 9999;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.floating-btn:hover {
+    background-color: #7290e5;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.6);
+}
+
+/* تنسيق النافذة المنبثقة */
+.floating-modal {
+    position: fixed;
+    bottom: 95px;
+    right: 30px;
+    width: 300px;
+    background: #111827;
+    border: 1px solid #1f2937;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    color: #f3f4f6;
+    overflow: hidden;
+}
+
+.floating-modal-header {
+    background: #1f2937;
+    padding: 10px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.floating-modal-header h4 {
+    margin: 0;
+    font-size: 15px;
+    color: #60a5fa;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #9ca3af;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.close-btn:hover {
+    color: #ffffff;
+}
+
+.floating-modal-body {
+    padding: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #9ca3af;
+}
