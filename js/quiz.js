@@ -46,7 +46,9 @@ function generateRecommendations(name, governorate, workEnv, jobType, interest) 
             "مسار JavaScript & Frontend Development (FreeCodeCamp)",
             "دورة بناء وتطوير المواقع الكاملة Full-Stack",
             "أساسيات البرمجيات وقواعد البيانات من CS50",
-            '🎬 <strong>ننصحك بمشاهدة هذا المحتوى:</strong> <a href="https://youtu.be/ij6qQQlGKtE?si=S1keYJYLezkr9uF2" target="_blank" style="color: #ff0000; font-weight: bold; text-decoration: underline;">البداية مع بايثون.</a>'
+            '🎬 <strong>ننصحك بمشاهدة هذا المحتوى:</strong>',
+            '<a href="https://youtu.be/ij6qQQlGKtE?si=S1keYJYLezkr9uF2" target="_blank" style="color: #ff0000; font-weight: bold; text-decoration: underline;">البداية مع بايثون.</a>',
+            '<a href="https://youtu.be/35qTqtpQMxg?si=XjXebVGxpf27dAzE" target="_blank" style="color: #ff0000; font-weight: bold; text-decoration: underline;">البداية مع C++.</a>'
         ];
     } else if (interest === 'graphic') {
         interestTitle = "التصميم الجرافيكي والهوية البصرية (Graphic Design)";
