@@ -3,14 +3,36 @@
         ['ocean', 'أزرق', '#38bdf8'], ['purple', 'بنفسجي', '#c084fc'], ['emerald', 'أخضر', '#34d399'],
         ['sunset', 'برتقالي', '#fb923c'], ['rose', 'وردي', '#fb7185'], ['black', 'أسود', '#000000']
     ];
-    /* الأول هو الخط الافتراضي للموقع (Tajawal من base.css) */
+    /* الخطوط: [المعرّف, الاسم في القائمة, قيمة font-family, اسمه في Google Fonts (أو null)]
+       الأول هو الافتراضي للموقع. عايزة خط جديد؟ ضيفي سطر هنا وخلاص، والباقي أوتوماتيك. */
     var FONTS = [
-        ['tajawal', 'Tajawal'],
-        ['cairo', 'Cairo'],
-        ['system', 'خط النظام']
+        ['tajawal', 'Tajawal',    '"Tajawal",sans-serif',              null],
+        ['cairo',   'Cairo',      '"Cairo",sans-serif',                'Cairo'],
+        ['almarai', 'Almarai',    '"Almarai",sans-serif',              'Almarai'],
+        ['ibm',     'IBM Plex',   '"IBM Plex Sans Arabic",sans-serif', 'IBM+Plex+Sans+Arabic'],
+        ['kufi',    'Noto Kufi',  '"Noto Kufi Arabic",sans-serif',     'Noto+Kufi+Arabic'],
+        ['amiri',   'Amiri',      '"Amiri",serif',                     'Amiri'],
+        ['messiri', 'El Messiri', '"El Messiri",sans-serif',           'El+Messiri'],
+        ['changa',  'Changa',     '"Changa",sans-serif',               'Changa'],
+        ['system',  'خط النظام',  'system-ui,-apple-system,"Segoe UI",Arial,sans-serif', null]
     ];
-    var K_THEME = 'careerstart-theme', K_USER = 'cs-user', K_FONT_SIZE = 'cs-font', K_FONT_FAMILY = 'cs-ff', K_PLAIN = 'cs-plain';
+ 
+    /* بوستر الفيديو الرئيسي لكل ثيم (ocean = البوستر الأصلي اللي في الـ HTML) */
+    var HERO_POSTERS = {
+        emerald: 'assets/main_poster_emerald.jpg',
+        purple:  'assets/main_poster_purple.jpg',
+        sunset:  'assets/main_poster_sunset.jpg',
+        rose:    'assets/main_poster_rose.jpg',
+        black:   'assets/main_poster_black.jpg'
+    };
+ 
+    /* بيانات "عن المنصة" (تظهر في آخر الإعدادات): غيّريها زي ما تحبي */
+    var ABOUT = { name: 'Career Start AI', version: '1.0', team: 'اسم الفريق' };
+ 
+    var K_THEME = 'careerstart-theme', K_USER = 'cs-user', K_FONT_SIZE = 'cs-font', K_FONT_FAMILY = 'cs-ff', K_PLAIN = 'cs-plain', K_MOUSE = 'cs-glow';
     var root = document.documentElement;
+    /* التوهج اللي بيتبع الماوس بيشتغل بس على الأجهزة اللي فيها ماوس ومن غير "تقليل الحركة" */
+    var CAN_GLOW = !!(window.matchMedia && matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches);
     function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
     function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
     function del(k) { try { localStorage.removeItem(k); } catch (e) {} }
@@ -35,9 +57,11 @@
  
     function init() {
         /* ---------- التنسيق ---------- */
+        var fontRules = FONTS.slice(1).map(function (f) {
+            return 'html[data-font="' + f[0] + '"] *:not(i):not([class*="fa-"]){font-family:' + f[2] + '!important}';
+        }).join('');
         var css = document.createElement('style');
         css.textContent =
-            '@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap");' +
             '.ts-wrap{display:none!important}' +
             '.fm-bar{position:fixed;right:12px;top:50%;transform:translateY(-50%);z-index:9997;display:flex;flex-direction:column;gap:8px;padding:10px 8px;border-radius:20px;direction:rtl;' +
             'background:var(--card,#1a264a);border:1px solid color-mix(in srgb,var(--accent,#38bdf8) 35%,transparent);' +
@@ -50,7 +74,7 @@
             '.fm-btn::after{content:attr(data-tip);position:absolute;right:54px;top:50%;transform:translateY(-50%);padding:5px 10px;border-radius:8px;' +
             'background:var(--panel,#0f172a);color:#e2e8f0;font-size:.78rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .15s}' +
             '.fm-btn:hover::after{opacity:1}' +
-            '.fm-panel{position:fixed;right:80px;top:50%;transform:translateY(-50%);z-index:9997;width:260px;padding:16px;border-radius:16px;display:none;direction:rtl;' +
+            '.fm-panel{position:fixed;right:80px;top:50%;transform:translateY(-50%);z-index:9997;width:260px;max-height:calc(100vh - 32px);overflow-y:auto;padding:16px;border-radius:16px;display:none;direction:rtl;' +
             'background:var(--card,#1a264a);color:#e2e8f0;border:1px solid color-mix(in srgb,var(--accent,#38bdf8) 35%,transparent);box-shadow:0 18px 40px rgba(0,0,0,.45)}' +
             '.fm-panel.open{display:block}' +
             '.fm-panel h4{margin:0 0 8px;font-size:.9rem;color:var(--accent,#38bdf8)}' +
@@ -81,15 +105,20 @@
             '.fm-sw[aria-checked="true"] i::after{right:18px}' +
             '.fm-sw:focus-visible{outline:3px solid var(--accent-light,#7dd3fc);outline-offset:3px}' +
             '.fm-reset{width:100%;margin-top:10px}' +
+            '.fm-about{margin-top:12px;padding-top:10px;border-top:1px solid rgba(148,163,184,.2);text-align:center;font-size:.74rem;color:#94a3b8;line-height:1.8}' +
+            '.fm-about b{color:var(--accent,#38bdf8)}' +
             '.fm-toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);z-index:10002;padding:10px 18px;border-radius:12px;direction:rtl;background:var(--card,#1a264a);color:#fff;' +
             'border:1px solid color-mix(in srgb,var(--accent,#38bdf8) 40%,transparent);box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s;font-size:.9rem}' +
             '.fm-toast.show{opacity:1}' +
-            /* الخطوط: بنستثني الأيقونات (i و fa-) عشان ما تتحوّلش لمربعات */
-            'html[data-font="cairo"] *:not(i):not([class*="fa-"]){font-family:"Cairo",sans-serif!important}' +
-            'html[data-font="system"] *:not(i):not([class*="fa-"]){font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif!important}' +
+            /* الخطوط (بتتولّد من قايمة FONTS) — بنستثني الأيقونات عشان ما تتحوّلش لمربعات */
+            fontRules +
+            '.mouse-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;pointer-events:none;z-index:1;opacity:0;transition:opacity .4s;' +
+            'background:radial-gradient(circle,color-mix(in srgb,var(--accent,#38bdf8) 20%,transparent) 0,transparent 62%);will-change:transform}' +
+            '.mouse-glow.on{opacity:1}' +
+            '.fm-plain .mouse-glow{display:none}' +
             '.fm-plain .hero-triangle,.fm-plain .bg-decorations,.fm-plain .orb-top-left,.fm-plain .orb-bottom-right,.fm-plain .floating-code-snippet,.fm-plain .tech-bg-grid{display:none!important}' +
             '@media(max-width:600px){.fm-bar{right:6px;padding:8px 6px;gap:6px}.fm-btn{width:34px;height:34px}.fm-btn::after{display:none}.fm-panel{right:58px;width:220px}}' +
-            '@media print{.fm-bar,.fm-panel,.fm-overlay,.fm-toast{display:none!important}}';
+            '@media print{.fm-bar,.fm-panel,.fm-overlay,.fm-toast,.mouse-glow{display:none!important}}';
         document.head.appendChild(css);
  
         /* ---------- القائمة ---------- */
@@ -120,7 +149,8 @@
             '<button type="button" class="fm-small" id="fmFontUp" aria-label="تكبير الخط">A+</button></div>' +
             '<h4 style="margin-top:4px">العرض</h4>' +
             '<button type="button" class="fm-sw" id="fmPlain" role="switch" aria-checked="false">إخفاء التوهج والمثلثات<i></i></button>' +
-            '<button type="button" class="fm-small fm-reset" id="fmResetAll">إعادة ضبط الإعدادات</button>';
+            (CAN_GLOW ? '<button type="button" class="fm-sw" id="fmMouse" role="switch" aria-checked="false">توهج يتبع الماوس<i></i></button>' : '') +
+            '<button type="button" class="fm-small fm-reset" id="fmResetAll">إعادة ضبط الإعدادات</button>'
  
         var toastEl = document.createElement('div');
         toastEl.className = 'fm-toast';
@@ -140,7 +170,19 @@
         var loginBtn = bar.querySelector('#fmLogin'), setBtn = bar.querySelector('#fmSettings'), colorBtn = bar.querySelector('#fmColors'), shareBtn = bar.querySelector('#fmShare');
  
         /* ---------- الثيم ---------- */
-        function applyTheme(id) { curTheme = id; root.setAttribute('data-theme', id); set(K_THEME, id); markThemes(); }
+        /* ---------- بوستر الفيديو الرئيسي بيتغيّر مع الثيم ---------- */
+        var heroVideo = document.querySelector('.hero-video video');
+        var origPoster = heroVideo ? heroVideo.getAttribute('poster') : null;
+        function updatePoster(id) {
+            if (!heroVideo) return;
+            var src = HERO_POSTERS[id] || origPoster;
+            if (!src || heroVideo.getAttribute('poster') === src) return;
+            var im = new Image();   /* بنحمّل الصورة الأول عشان ما يحصلش وميض أو صورة مكسورة */
+            im.onload = function () { heroVideo.setAttribute('poster', src); };
+            im.src = src;
+        }
+ 
+        function applyTheme(id) { curTheme = id; root.setAttribute('data-theme', id); set(K_THEME, id); markThemes(); updatePoster(id); }
         var themeRow = colorPanel.querySelector('#fmThemes');
         THEMES.forEach(function (t) {
             var b = document.createElement('button');
@@ -153,10 +195,22 @@
             Array.prototype.forEach.call(themeRow.children, function (b) { b.setAttribute('aria-pressed', String(b.dataset.id === curTheme)); });
         }
         markThemes();
+        updatePoster(curTheme);
  
         /* ---------- نوع الخط ---------- */
+        var loadedFonts = {};
+        function loadFont(id) {   /* بنحمّل الخط من Google أول ما يتختار بس، عشان الموقع يفضل خفيف */
+            var f = FONTS.filter(function (x) { return x[0] === id; })[0];
+            if (!f || !f[3] || loadedFonts[id]) return;
+            loadedFonts[id] = true;
+            var l = document.createElement('link');
+            l.rel = 'stylesheet';
+            l.href = 'https://fonts.googleapis.com/css2?family=' + f[3] + ':wght@400;700&display=swap';
+            document.head.appendChild(l);
+        }
         function applyFontFamily(id) {
             curFontFamily = id;
+            loadFont(id);
             if (id === 'tajawal') { root.removeAttribute('data-font'); } else { root.setAttribute('data-font', id); }
             set(K_FONT_FAMILY, id);
             markFonts();
@@ -173,6 +227,7 @@
             Array.prototype.forEach.call(fontRow.children, function (b) { b.setAttribute('aria-pressed', String(b.dataset.id === curFontFamily)); });
         }
         markFonts();
+        loadFont(curFontFamily);
  
         /* ---------- حجم الخط ---------- */
         function applyFontSize(v) { font = Math.min(130, Math.max(85, v)); root.style.fontSize = font + '%'; set(K_FONT_SIZE, font); }
@@ -189,8 +244,38 @@
         }
         applyPlain(root.classList.contains('fm-plain'));
         plainBtn.onclick = function () { applyPlain(!root.classList.contains('fm-plain')); };
+ 
+        /* ---------- توهج يتبع الماوس ---------- */
+        var mouseOn = get(K_MOUSE) === '1';   /* مقفول افتراضياً: بيشتغل بس لو الزائر فعّله */
+        var mouseBtn = panel.querySelector('#fmMouse');
+        var glow = null, gx = 0, gy = 0, tx = 0, ty = 0, raf = null;
+        if (CAN_GLOW) {
+            glow = document.createElement('div');
+            glow.className = 'mouse-glow';
+            glow.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(glow);
+            var loop = function () {
+                gx += (tx - gx) * 0.14; gy += (ty - gy) * 0.14;
+                glow.style.transform = 'translate3d(' + gx + 'px,' + gy + 'px,0)';
+                raf = (Math.abs(tx - gx) > 0.5 || Math.abs(ty - gy) > 0.5) ? requestAnimationFrame(loop) : null;
+            };
+            document.addEventListener('mousemove', function (e) {
+                if (!mouseOn) return;
+                tx = e.clientX; ty = e.clientY;
+                if (!glow.classList.contains('on')) { gx = tx; gy = ty; glow.classList.add('on'); }
+                if (!raf) raf = requestAnimationFrame(loop);
+            }, { passive: true });
+            root.addEventListener('mouseleave', function () { glow.classList.remove('on'); });
+        }
+        function applyMouse(on) {
+            mouseOn = on;
+            if (mouseBtn) mouseBtn.setAttribute('aria-checked', String(on));
+            if (glow && !on) glow.classList.remove('on');
+            set(K_MOUSE, on ? '1' : '0');
+        }
+        if (mouseBtn) { mouseBtn.setAttribute('aria-checked', String(mouseOn)); mouseBtn.onclick = function () { applyMouse(!mouseOn); }; }
         panel.querySelector('#fmResetAll').onclick = function () {
-            applyFontSize(100); applyFontFamily('tajawal'); applyPlain(false);
+            applyFontSize(100); applyFontFamily('tajawal'); applyPlain(false); applyMouse(false);
             toast('تمت إعادة ضبط الإعدادات');
         };
  
