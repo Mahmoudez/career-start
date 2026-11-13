@@ -109,11 +109,10 @@
         }
     });
 
-    fetch(dataUrl)
-        .then(response => {
+    (window.CS_DATA?.roadmaps ? Promise.resolve(window.CS_DATA.roadmaps) : fetch(dataUrl).then(response => {
             if (!response.ok) throw new Error('تعذر تحميل خرائط التعلّم.');
             return response.json();
-        })
+        }))
         .then(data => {
             roadmaps = data;
             tabs.innerHTML = fields.map(field => `<button type="button" role="tab" id="tab-${field.id}" aria-controls="roadmapPanel" data-field="${field.id}">${field.label}</button>`).join('');

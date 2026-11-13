@@ -18,6 +18,9 @@ body {
     overflow-x: hidden;
 }
 
+.media-fallback { display:grid; place-items:center; width:100%; aspect-ratio:16/9; background-color:var(--panel-deep); background-size:cover; background-position:center; color:#fff; font-weight:700; text-shadow:0 2px 8px #000; }
+.image-fallback { display:grid; place-items:center; background:var(--card); color:var(--accent-light); border:1px solid color-mix(in srgb,var(--accent) 30%,transparent); border-radius:10px; text-align:center; padding:1rem; }
+
 /* الأشكال الزخرفية والتوهج في الخلفية */
 .bg-decorations {
     position: absolute;

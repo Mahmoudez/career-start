@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>career start | منصة دعم الخريجين الجدد</title>
+    <meta name="description" content="منصة Career Start تساعد حديثي التخرج على اختيار المسار وتطوير المهارات والاستعداد للعمل.">
+    <meta property="og:title" content="Career Start | منصة دعم الخريجين الجدد"><meta property="og:description" content="اختر مسارك، طوّر مهاراتك، واستعد لسوق العمل."><link rel="icon" href="assets/logo.png">
     <link rel="stylesheet" href="css/quiz.css">
     <link rel="stylesheet" href="css/cv-guide.css">
     <link rel="stylesheet" href="css/cv-analyzer.css">
@@ -24,12 +26,13 @@
     <!-- الهيدر وقائمة التنقل -->
     <header class="navbar">
         <a href="index.html" class="brand-link" aria-label="Career Start — الرئيسية">
-            <img src="assets/logo.png" alt="">
+            <img src="assets/logo.png" alt="" loading="lazy" width="640" height="360" decoding="async">
             <span>Career Start <strong>AI</strong></span>
         </a>
         <nav aria-label="التنقل الرئيسي">
             <a href="pages/quiz.html">تحديد المسار</a>
-            <a href="pages/quiz1.html">الاختبار</a>
+            <a href="pages/quiz.html">الاختبار</a>
+            <a href="pages/soft-skills.html">المهارات الشخصية</a>
             <a href="pages/roadmaps.html">خرائط التعلّم</a>
             <a href="#cv-analyzer">تحليل CV</a>
             <a href="pages/cv-builder.html">إنشاء CV</a>
@@ -79,7 +82,7 @@
             <!-- مكان الفيديو التعريفي -->
             <div class="hero-video">
                 <div class="video-container">
-                    <video controls poster="assets/main poster.jpg" width="100%">
+                    <video controls aria-label="فيديو تعريفي بمنصة Career Start" poster="assets/main-poster.jpg" width="100%" height="360" preload="metadata">
                         <source src="assets/main.mp4" type="video/mp4">
                         متصفحك لا يدعم تشغيل الفيديو.
                     </video>
@@ -88,10 +91,17 @@
         </section>
 
         <section class="landing-feature-card" aria-labelledby="quiz-promo-title">
-            <img src="assets/path-icon.png" alt="">
+            <img src="assets/path-icon.png" alt="" loading="lazy" width="640" height="360" decoding="async">
             <div><span class="feature-kicker">ابدأ رحلتك</span><h2 id="quiz-promo-title">اكتشف المجال الأقرب لاهتماماتك</h2>
                 <p>أجب عن أسئلة تحديد المسار، ثم تابع إلى خريطة التعلّم المناسبة لك.</p>
-                <a class="btn-primary" href="pages/quiz1.html">ابدأ اختبار المسار</a>
+                <a class="btn-primary" href="pages/quiz.html">ابدأ اختبار المسار</a>
+            </div>
+        </section>
+        <section class="landing-feature-card" aria-labelledby="softskills-promo-title">
+            <img src="assets/ai-advisors.png" alt="" loading="lazy" width="640" height="360" decoding="async">
+            <div><span class="feature-kicker">مهارات للحياة المهنية</span><h2 id="softskills-promo-title">طوّر مهاراتك الشخصية</h2>
+                <p>تعلّم التواصل والعمل الجماعي وإدارة الوقت، ثم قيّم تقدمك بخطة عملية.</p>
+                <a class="btn-primary" href="pages/soft-skills.html">ابدأ تدريب المهارات</a>
             </div>
         </section>
         <!-- قسم السيرة الذاتية (CV Builder & Tips) -->
@@ -141,29 +151,29 @@
                         <option value="UI-UX">تصميم UI/UX</option>
                         <option value="Graphic Design">التصميم الجرافيكي</option>
                     </select>
-                    <label for="cvFileInput">ملف السيرة الذاتية (PDF أو PNG أو JPG، حتى 3 ميجابايت)</label>
+                    <label for="cvFileInput">ملف السيرة الذاتية (PDF أو DOCX أو TXT، حتى 3 ميجابايت)</label>
                     <div id="cvUploadArea" class="cv-upload-area" tabindex="0" role="button" aria-controls="cvFileInput" aria-label="اختر ملف السيرة الذاتية أو اسحبه هنا">
                         <span class="cv-upload-icon" aria-hidden="true">⇧</span>
                         <strong>اسحب الملف وأفلته هنا</strong><span>أو</span>
                         <button id="cvChooseFile" class="cv-choose-file" type="button">اختر ملفاً</button>
-                        <input id="cvFileInput" type="file" accept=".pdf,.png,.jpg,.jpeg,application/pdf,image/png,image/jpeg" hidden>
+                        <input id="cvFileInput" type="file" accept=".pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain" hidden>
                         <div id="cvSelectedFile" class="cv-selected-file" hidden><span id="cvFileDetails"></span><button id="cvRemoveFile" type="button" aria-label="إزالة الملف">إزالة</button></div>
                     </div>
                     <p class="cv-privacy-note">لحماية خصوصيتك، لا ترفع معلومات حساسة مثل أرقام الهوية أو بيانات الحسابات.</p>
                     <label for="cvTextInput">أو الصق نص السيرة الذاتية</label>
-                    <textarea id="cvTextInput" name="cvText" rows="9" maxlength="6000" placeholder="الصق هنا الخبرات، التعليم، المشاريع، والمهارات..."></textarea>
+                    <textarea id="cvTextInput" name="cvText" rows="9" maxlength="12000" placeholder="الصق هنا الخبرات، التعليم، المشاريع، والمهارات..."></textarea>
                     <div class="cv-form-meta"><span id="cvCharCount">0 / 6000</span><span>لا تضع معلومات حساسة لا تحتاج إلى تقييمها.</span></div>
                     <div id="cvFormMessage" class="cv-form-message" role="status" aria-live="polite" hidden></div>
                     <button id="analyzeCvBtn" class="btn-primary" type="submit"><span class="cv-button-label">حلّل سيرتي الذاتية</span><span class="cv-spinner" aria-hidden="true"></span></button>
                 </form>
                 <section id="cvAnalysisResult" class="cv-analysis-result" aria-live="polite" hidden></section>
                 <div class="section-image-box">
-    <img src="assets/cv-preview.png" alt="معاينة السيرة الذاتية">
+    <img src="assets/cv-preview.png" alt="معاينة السيرة الذاتية" loading="lazy" width="640" height="360" decoding="async">
 </div>
             </div>
         </section>
         <section id="interview" class="landing-feature-card" aria-labelledby="interview-promo-title">
-            <img src="assets/interview-prep.png" alt="">
+            <img src="assets/interview-prep.png" alt="" loading="lazy" width="640" height="360" decoding="async">
             <div><span class="feature-kicker">تدريب عملي</span><h2 id="interview-promo-title">استعد لمقابلتك القادمة</h2>
                 <p>افتح صفحة المقابلات لاستعراض الأسئلة والتدرّب على إجاباتك.</p>
                 <a class="btn-primary" href="pages/interview.html">افتح تدريب المقابلة</a>
@@ -173,9 +183,9 @@
         <section id="fields-videos" class="field-map-section" aria-labelledby="field-map-title">
             <div class="section-title"><h2 id="field-map-title">اختر خريطة التعلّم</h2><p>ابدأ مساراً منظماً في أحد المجالات المتاحة.</p></div>
             <div class="field-map-grid">
-                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/programming-thumb.jpg" alt=""><span>البرمجة وتطوير الويب</span><b>عرض الخريطة ←</b></a>
-                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/uiux-thumb.jpg" alt=""><span>تصميم UI/UX</span><b>عرض الخريطة ←</b></a>
-                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/graphic-thumb.jpg" alt=""><span>التصميم الجرافيكي</span><b>عرض الخريطة ←</b></a>
+                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/programming-thumb.jpg" alt="" loading="lazy" width="640" height="360" decoding="async"><span>البرمجة وتطوير الويب</span><b>عرض الخريطة ←</b></a>
+                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/uiux-thumb.jpg" alt="" loading="lazy" width="640" height="360" decoding="async"><span>تصميم UI/UX</span><b>عرض الخريطة ←</b></a>
+                <a href="pages/roadmaps.html" class="field-map-card"><img src="assets/graphic-thumb.jpg" alt="" loading="lazy" width="640" height="360" decoding="async"><span>التصميم الجرافيكي</span><b>عرض الخريطة ←</b></a>
             </div>
         </section>
 
@@ -192,8 +202,8 @@
                 <div class="media-card">
                     <div class="media-preview">
                         <span class="media-badge">فيديو AI</span>
-                        <video controls poster="assets/true-false.jpg">
-                            <source src="assets/.mp4" type="video/mp4">
+                        <video controls aria-label="محاكاة مقابلة عمل" poster="assets/true-false.jpg" width="640" height="360" preload="metadata">
+                            <source src="assets/from-ai.mp4" type="video/mp4">
                             متصفحك لا يدعم تشغيل الفيديو.
                         </video>
                     </div>
@@ -207,8 +217,8 @@
                 <div class="media-card">
                     <div class="media-preview">
                         <span class="media-badge">فيديو AI</span>
-                        <video controls poster="assets/talk about you.jpg">
-                            <source src="assets/talk about your self.mp4" type="video/mp4">
+                        <video controls aria-label="التحدث عن نفسك في المقابلة" poster="assets/talk-about-you.jpg" width="640" height="360" preload="metadata">
+                            <source src="assets/talk-about-yourself.mp4" type="video/mp4">
                             متصفحك لا يدعم تشغيل الفيديو.
                         </video>
                     </div>
@@ -288,6 +298,7 @@
 
     <footer>
         <p>© 2026 جميع الحقوق محفوظة - منصة career start</p>
+        <a href="pages/soft-skills.html">المهارات الشخصية</a>
     </footer>
 
 <!-- زرار الدعم الفني العائم -->
@@ -315,6 +326,8 @@
 
     <script src="js/layout.js"></script>
     <script src="js/cv-analyzer.js"></script>
+    <script src="assets/media.config.js"></script>
+    <script src="js/media-fallback.js"></script>
     <script src="js/floating-menu.js"></script>
 </body>
 </html>

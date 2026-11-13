@@ -1,0 +1,21 @@
+const assert = require('node:assert/strict');
+const { analyze, normalize, extractJson } = require('../api/_cv-engine');
+const good = 'Email: graduate@example.com\nSummary: junior developer\nSkills: JavaScript, SQL, Git\nExperience: Developed a dashboard and increased usage by 25%\nEducation: Bachelor\nProjects: portfolio';
+const arabic = 'البريد: sara@example.com\nملخص: خريجة تصميم\nمهارات: Figma، أبحاث المستخدم\nخبرة: صممت واجهة وحسنت الاستخدام بنسبة 20٪\nتعليم: بكالوريوس\nمشاريع: تطبيق حجز';
+for (const sample of [good, 'bad', '', arabic]) {
+  const result = analyze(sample, sample === arabic ? 'UI-UX' : 'Programming');
+  assert.equal(typeof result.score, 'number'); assert.ok(result.score >= 0 && result.score <= 10);
+  for (const key of ['ats_score','field_fit','summary','strengths','weaknesses','missing_skills','improvements']) assert.ok(key in result);
+}
+assert.equal(extractJson('```json\n{"score":8}\n```').score, 8);
+assert.throws(() => extractJson('not json'));
+assert.equal(normalize({ score: 100 }).score, 10);
+async function fallbackWhenProviderFails() {
+  const handler = require('../api/analyze-cv'); const originalFetch = global.fetch, originalKey = process.env.GEMINI_API_KEY;
+  process.env.GEMINI_API_KEY = 'test-key'; global.fetch = async () => { throw new Error('simulated timeout'); };
+  const req = { method: 'POST', headers: {'content-type':'application/json'}, body: {field:'Programming',text:good}, socket: {remoteAddress:'test'} };
+  const res = { headers:{}, setHeader(k,v){this.headers[k]=v}, status(n){this.statusCode=n;return this}, json(data){this.data=data;return data} };
+  await handler(req,res); assert.equal(res.statusCode,200); assert.equal(res.data.ok,true); assert.equal(res.data.source,'local'); assert.equal(typeof res.data.result.score,'number');
+  global.fetch = originalFetch; if(originalKey===undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY=originalKey;
+}
+fallbackWhenProviderFails().then(()=>console.log('CV resilience tests passed')).catch(error=>{console.error(error);process.exitCode=1;});

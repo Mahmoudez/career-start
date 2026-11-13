@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../css/cv-analyzer.css">
     <link rel="stylesheet" href="../css/layout.css">
     <link rel="stylesheet" href="../css/base.css">
+    <link rel="icon" href="../assets/logo.png">
+    <meta name="description" content="حلل سيرتك الذاتية محلياً أو بالذكاء الاصطناعي واحصل على خطوات عملية لتحسينها.">
+    <meta property="og:title" content="تحليل السيرة الذاتية | Career Start">
+    <meta property="og:description" content="تقييم عملي للسيرة الذاتية مع تحليل ذكي محلي عند تعذر الخدمة.">
     <script src="../js/cv-analyzer.js" defer></script>
 </head>
 <body>
@@ -20,12 +24,23 @@
             <a href="cv-guide.html">دليل السيرة الذاتية</a>
             <a href="interview.html">الإنترفيو</a>
             <a href="roadmaps.html">خريطة المجالات</a>
-        </nav>
+        <a href="soft-skills.html">المهارات الشخصية</a></nav>
     </header>
     <main>
-        
+        <section class="cv-analyzer-standalone">
+            <h1>تحليل السيرة الذاتية</h1><p>الصق النص أو اختر ملف PDF أو DOCX أو TXT. يمكنك استخدام التحليل المحلي حتى عند انقطاع الخدمة.</p>
+            <form id="cvAnalyzerForm" novalidate>
+                <label for="cvTargetField">المجال المستهدف</label>
+                <select id="cvTargetField" name="targetField"><option value="Programming">البرمجة</option><option value="UI-UX">تصميم UI/UX</option><option value="Graphic Design">التصميم الجرافيكي</option></select>
+                <label for="cvFileInput">ملف السيرة (PDF أو DOCX أو TXT، حتى 3 ميجابايت)</label><input id="cvFileInput" type="file" accept=".pdf,.docx,.txt">
+                <label for="cvTextInput">أو الصق نص السيرة الذاتية</label><textarea id="cvTextInput" rows="10" maxlength="12000" placeholder="الصق الخبرات والتعليم والمشاريع والمهارات…"></textarea>
+                <p id="cvCharCount">0 / 6000</p><div id="cvFormMessage" role="status" aria-live="polite" hidden></div>
+                <button id="analyzeCvBtn" class="btn-primary" type="submit">حلّل سيرتي الذاتية</button>
+            </form><section id="cvAnalysisResult" aria-live="polite" hidden></section>
+        </section>
     </main>
-    <footer><p>© 2026 جميع الحقوق محفوظة - منصة career start</p></footer>
+    <footer><p>© 2026 جميع الحقوق محفوظة - منصة career start</p><a href="soft-skills.html">المهارات الشخصية</a>
+    </footer>
     <script src="../js/floating-menu.js"></script>
 </body>
 </html>
