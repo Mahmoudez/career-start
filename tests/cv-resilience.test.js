@@ -10,12 +10,19 @@ for (const sample of [good, 'bad', '', arabic]) {
 assert.equal(extractJson('```json\n{"score":8}\n```').score, 8);
 assert.throws(() => extractJson('not json'));
 assert.equal(normalize({ score: 100 }).score, 10);
+async function invoke(handler, ip) {
+  const req = { method: 'POST', headers: {'content-type':'application/json'}, body: {field:'Programming',text:good}, socket: {remoteAddress:ip} };
+  const res = { setHeader(){}, status(n){this.statusCode=n;return this}, json(data){this.data=data;return data} };
+  await handler(req,res); assert.equal(res.statusCode,200); assert.equal(res.data.ok,true); assert.equal(res.data.source,'local'); assert.equal(typeof res.data.result.score,'number');
+}
 async function fallbackWhenProviderFails() {
   const handler = require('../api/analyze-cv'); const originalFetch = global.fetch, originalKey = process.env.GEMINI_API_KEY;
-  process.env.GEMINI_API_KEY = 'test-key'; global.fetch = async () => { throw new Error('simulated timeout'); };
-  const req = { method: 'POST', headers: {'content-type':'application/json'}, body: {field:'Programming',text:good}, socket: {remoteAddress:'test'} };
-  const res = { headers:{}, setHeader(k,v){this.headers[k]=v}, status(n){this.statusCode=n;return this}, json(data){this.data=data;return data} };
-  await handler(req,res); assert.equal(res.statusCode,200); assert.equal(res.data.ok,true); assert.equal(res.data.source,'local'); assert.equal(typeof res.data.result.score,'number');
-  global.fetch = originalFetch; if(originalKey===undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY=originalKey;
+  try {
+    delete process.env.GEMINI_API_KEY; await invoke(handler,'no-key');
+    process.env.GEMINI_API_KEY = 'invalid-test-key'; global.fetch = async () => ({ ok:false, status:403, headers:{get(){return null}} }); await invoke(handler,'wrong-key');
+    global.fetch = async () => { throw new Error('simulated timeout'); }; await invoke(handler,'timeout');
+  } finally {
+    global.fetch = originalFetch; if(originalKey===undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY=originalKey;
+  }
 }
 fallbackWhenProviderFails().then(()=>console.log('CV resilience tests passed')).catch(error=>{console.error(error);process.exitCode=1;});
