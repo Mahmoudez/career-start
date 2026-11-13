@@ -10,7 +10,23 @@ document.addEventListener('DOMContentLoaded', () => {
   textInput.addEventListener('input', () => { count.textContent = `${textInput.value.length} / 12000`; });
   const allowed = /\.(pdf|docx|txt)$/i;
   fileInput.accept = '.pdf,.docx,.txt,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,text/plain';
-  fileInput.addEventListener('change', () => { chosenFile = fileInput.files[0] || null; });
+  const uploadArea = document.getElementById('cvUploadArea'), selectedBox = document.getElementById('cvSelectedFile');
+  const fileDetails = document.getElementById('cvFileDetails');
+  const setFile = file => {
+    if (!file) return;
+    if (!allowed.test(file.name)) { chosenFile = null; say('اختر ملف PDF أو DOCX أو TXT.','error'); return; }
+    if (file.size === 0 || file.size > 3 * 1024 * 1024) { chosenFile = null; say(file.size ? 'حجم الملف أكبر من 3 ميجابايت.' : 'الملف فارغ. اختر ملفاً آخر.','error'); return; }
+    chosenFile = file; say('', '');
+    if (selectedBox && fileDetails) { fileDetails.textContent = `${file.name} — ${(file.size / 1024).toFixed(1)} كيلوبايت`; selectedBox.hidden = false; }
+  };
+  fileInput.addEventListener('change', () => setFile(fileInput.files[0] || null));
+  document.getElementById('cvChooseFile')?.addEventListener('click', () => fileInput.click());
+  uploadArea?.addEventListener('click', event => { if (!event.target.closest('button')) fileInput.click(); });
+  uploadArea?.addEventListener('keydown', event => { if (event.target === uploadArea && ['Enter',' '].includes(event.key)) { event.preventDefault(); fileInput.click(); } });
+  document.getElementById('cvRemoveFile')?.addEventListener('click', () => { chosenFile = null; fileInput.value = ''; if (selectedBox) selectedBox.hidden = true; if (fileDetails) fileDetails.textContent = ''; });
+  uploadArea?.addEventListener('dragover', event => { event.preventDefault(); uploadArea.classList.add('is-dragging'); });
+  uploadArea?.addEventListener('dragleave', () => uploadArea.classList.remove('is-dragging'));
+  uploadArea?.addEventListener('drop', event => { event.preventDefault(); uploadArea.classList.remove('is-dragging'); setFile(event.dataTransfer.files[0]); });
   const loadScript = src => new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = src; script.onload = resolve; script.onerror = reject; document.head.append(script); });
   async function extract(file) {
     if (/\.txt$/i.test(file.name)) return file.text();
