@@ -10,7 +10,6 @@ Replace each file in place to update the site; do not rename paths unless you al
 | `true-false.jpg` | JPG or WebP, 1280×720 | Interview example poster |
 | `talk-about-yourself.mp4` | MP4/H.264, 1280×720 | “Tell me about yourself” example |
 | `talk-about-you.jpg` | JPG or WebP, 1280×720 | “Tell me about yourself” poster |
-| `hero-banner.png` | PNG/WebP, 1600×900 | Reserved landing artwork |
 | `path-icon.png` | PNG/SVG, 512×512 | Career quiz card |
 | `ai-advisors.png` | PNG/WebP, 900×650 | Soft skills promo card |
 | `cv-preview.png` | PNG/WebP, 1000×700 | CV preview on landing page |
@@ -23,4 +22,4 @@ Replace each file in place to update the site; do not rename paths unless you al
 | `placeholders/interview-demo.svg` | SVG, 1280×720 | Interview demo placeholder |
 | `placeholders/about-yourself.svg` | SVG, 1280×720 | Interview answer placeholder |
 
-Other legacy images in `assets/` are currently retained because project references or existing feature pages may depend on them. The media inventory in `data/media.json` is the central list of replaceable video paths and labels.
+The media paths used by pages are centralized in `media.config.js` and the corresponding source keys in the HTML. Files with no page or stylesheet references were removed during cleanup.
