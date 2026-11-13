@@ -20,7 +20,7 @@ async function fallbackWhenProviderFails() {
   try {
     delete process.env.GEMINI_API_KEY; await invoke(handler,'no-key');
     process.env.GEMINI_API_KEY = 'invalid-test-key'; global.fetch = async () => ({ ok:false, status:403, headers:{get(){return null}} }); await invoke(handler,'wrong-key');
-    global.fetch = async () => { throw new Error('simulated timeout'); }; await invoke(handler,'timeout');
+    global.fetch = async () => { const error = new Error('simulated timeout'); error.name = 'AbortError'; throw error; }; await invoke(handler,'timeout');
   } finally {
     global.fetch = originalFetch; if(originalKey===undefined) delete process.env.GEMINI_API_KEY; else process.env.GEMINI_API_KEY=originalKey;
   }
