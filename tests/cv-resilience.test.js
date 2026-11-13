@@ -1,5 +1,6 @@
 const assert = require('node:assert/strict');
 const { analyze, normalize, extractJson } = require('../api/_cv-engine');
+const { improve } = require('../js/cv-local-improve');
 const good = 'Email: graduate@example.com\nSummary: junior developer\nSkills: JavaScript, SQL, Git\nExperience: Developed a dashboard and increased usage by 25%\nEducation: Bachelor\nProjects: portfolio';
 const arabic = 'البريد: sara@example.com\nملخص: خريجة تصميم\nمهارات: Figma، أبحاث المستخدم\nخبرة: صممت واجهة وحسنت الاستخدام بنسبة 20٪\nتعليم: بكالوريوس\nمشاريع: تطبيق حجز';
 for (const sample of [good, 'bad', '', arabic]) {
@@ -10,6 +11,10 @@ for (const sample of [good, 'bad', '', arabic]) {
 assert.equal(extractJson('```json\n{"score":8}\n```').score, 8);
 assert.throws(() => extractJson('not json'));
 assert.equal(normalize({ score: 100 }).score, 10);
+assert.equal(improve('', 'summary', 'ar'), '');
+assert.match(improve('  صممت   واجهة واجهة  للمستخدمين  ', 'experience', 'ar'), /^صممت واجهة للمستخدمين$/);
+assert.match(improve('  built   built dashboard   for users ', 'experience', 'en'), /^Built dashboard for users$/);
+assert.equal(improve('   Led   team  \n\n  created created  app ', 'project', 'en'), 'Led team\nCreated app');
 async function invoke(handler, ip) {
   const req = { method: 'POST', headers: {'content-type':'application/json'}, body: {field:'Programming',text:good}, socket: {remoteAddress:ip} };
   const res = { setHeader(){}, status(n){this.statusCode=n;return this}, json(data){this.data=data;return data} };
