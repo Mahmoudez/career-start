@@ -4,11 +4,8 @@
     const INTRO_TEXT = 'Your next step in Career Start starts here';
     const INTRO_DURATION_MS = 10000;
     const EXIT_DURATION_MS = 800;
-    const SESSION_KEY = 'career-start-intro-seen';
-
-    function shouldShowIntro(search, storage) {
-        if (/(?:^|[?&])intro=1(?:&|$)/.test(search || '')) return true;
-        try { return storage.getItem(SESSION_KEY) !== '1'; } catch (error) { return true; }
+    function shouldShowIntro(search) {
+        return !/(?:^|[?&])intro=0(?:&|$)/.test(search || '');
     }
 
     function createExit(onExit) {
@@ -19,10 +16,6 @@
             onExit();
             return true;
         };
-    }
-
-    function markSeen(storage) {
-        try { storage.setItem(SESSION_KEY, '1'); } catch (error) { /* file:// and private modes can deny storage */ }
     }
 
     function buildTitle(doc, title) {
@@ -43,10 +36,7 @@
     }
 
     function start(doc, win) {
-        let storage;
-        try { storage = win.sessionStorage; } catch (error) { storage = null; }
-        if (!shouldShowIntro(win.location.search, storage)) return;
-        markSeen(storage);
+        if (!shouldShowIntro(win.location.search)) return;
 
         const previousFocus = doc.activeElement;
         const oldOverflow = doc.body.style.overflow;

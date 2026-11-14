@@ -9,6 +9,8 @@ Career Start is a static Arabic first career guidance website for new graduates.
 3. For the static site, run `python3 -m http.server 8000` and open `http://localhost:8000`. Quiz, roadmap and soft-skills data also has a generated browser fallback for direct `file://` use; after editing JSON run `npm run sync-data-fallback` to refresh it. API-backed AI requires the Vercel local server, while the CV analyzer has a browser local fallback.
 4. To run `/api` locally, use Vercel CLI (`vercel dev`) and configure the environment values below.
 
+The landing page intro plays on every load. Add `?intro=0` to the URL to disable it while testing; the Skip button and Escape key also dismiss it.
+
 ## Environment variables
 
 Copy `.env.example` to `.env.local` for local API development. Set `GEMINI_API_KEY` only in Vercel/server environment to enable AI. `GEMINI_MODEL` selects the first model (default `gemini-2.5-flash`) and `GEMINI_FALLBACK_MODEL` optionally adds another model. The functions always fall back to local rules if the key is absent, invalid, timed out, rate limited or unavailable. Never put provider keys in browser code. `SUPABASE_URL` and `SUPABASE_ANON_KEY` are optional public client settings; no Supabase feature currently depends on them.
