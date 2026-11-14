@@ -7,6 +7,7 @@ Replace each file in place to update the site; do not rename paths unless you al
 | `main.mp4` | MP4/H.264, 1280×720, under 20 MB | Landing hero intro video |
 | `main-poster.jpg` | JPG or WebP, 1280×720 | Hero video poster and theme fallback |
 | `from-ai.mp4` | MP4/H.264, 1280×720 | Interview response example |
+| `true-false.mp4` | MP4/H.264, 1280×720 | Correct and incorrect interview response example |
 | `true-false.jpg` | JPG or WebP, 1280×720 | Interview example poster |
 | `talk-about-yourself.mp4` | MP4/H.264, 1280×720 | “Tell me about yourself” example |
 | `talk-about-you.jpg` | JPG or WebP, 1280×720 | “Tell me about yourself” poster |
