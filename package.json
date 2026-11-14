@@ -1,0 +1,6 @@
+{
+  "name": "career-start",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": { "test": "node tests/cv-resilience.test.js && node tests/intro-controller.test.js", "sync-data-fallback": "node scripts/generate-data-fallback.js" }
+}

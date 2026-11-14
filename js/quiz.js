@@ -258,11 +258,10 @@ function generateRecommendations(name, governorate, workEnv, jobType, interest) 
             else { current += 1; renderQuestion(); }
         });
 
-        fetch('../data/quiz.json')
-            .then(response => {
+        (window.CS_DATA?.quiz ? Promise.resolve(window.CS_DATA.quiz) : fetch('../data/quiz.json').then(response => {
                 if (!response.ok) throw new Error('Unable to load quiz data');
                 return response.json();
-            })
+            }))
             .then(data => {
                 if (!Array.isArray(data.questions) || data.questions.length < 10 || data.questions.length > 12) throw new Error('Invalid quiz data');
                 questions = data.questions;

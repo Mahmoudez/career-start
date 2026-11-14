@@ -656,7 +656,7 @@ footer {
 
 .hero-video .video-container {
     position: relative;
-    overflow: visible; 
+    overflow: visible;
     border-radius: 16px;
     isolation: isolate;
 }
@@ -666,7 +666,7 @@ footer {
 .hero-video .video-container::before {
     content: "";
     position: absolute;
-    inset: -3px;  
+    inset: -3px;
     padding: 3px;
     border-radius: 19px;
     background: conic-gradient(from var(--fm-angle), transparent 0 45%, var(--accent) 72%, var(--accent-2) 100%);
@@ -674,7 +674,7 @@ footer {
     -webkit-mask-composite: xor;
     mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     mask-composite: exclude;
-    animation: fmSpin 5s linear infinite; 
+    animation: fmSpin 5s linear infinite;
     pointer-events: none;
     z-index: 2;
 }

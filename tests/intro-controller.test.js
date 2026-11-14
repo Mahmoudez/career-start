@@ -1,0 +1,12 @@
+const assert = require('node:assert/strict');
+const { shouldShowIntro, createExit } = require('../js/intro');
+assert.equal(shouldShowIntro(''), true);
+assert.equal(shouldShowIntro('?intro=0'), false);
+assert.equal(shouldShowIntro('?x=1&intro=0&y=2'), false);
+assert.equal(shouldShowIntro('?intro=01'), true);
+let exits = 0;
+const skip = createExit(() => { exits += 1; });
+assert.equal(skip(), true);
+assert.equal(skip(), false);
+assert.equal(exits, 1);
+console.log('Intro controller tests passed');

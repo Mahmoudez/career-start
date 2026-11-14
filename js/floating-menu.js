@@ -16,18 +16,19 @@
         ['changa',  'Changa',     '"Changa",sans-serif',               'Changa'],
         ['system',  'خط النظام',  'system-ui,-apple-system,"Segoe UI",Arial,sans-serif', null]
     ];
- 
+
     /* بوستر الفيديو الرئيسي لكل ثيم (ocean = البوستر الأصلي اللي في الـ HTML) */
     var HERO_POSTERS = {
-        emerald: 'assets/main_poster_emerald.jpg',
-        purple:  'assets/main_poster_purple.jpg',
-        sunset:  'assets/main_poster_sunset.jpg',
-        rose:    'assets/main_poster_rose.jpg',
+        emerald: 'assets/main-poster.jpg',
+        purple:  'assets/main-poster.jpg',
+        sunset:  'assets/main-poster.jpg',
+        rose:    'assets/main-poster.jpg',
+        black:   'assets/main-poster.jpg'
     };
- 
+
     /* بيانات "عن المنصة" (تظهر في آخر الإعدادات): غيّريها زي ما تحبي */
     var ABOUT = { name: 'Career Start AI', version: '1.0', team: 'اسم الفريق' };
- 
+
     var K_THEME = 'careerstart-theme', K_USER = 'cs-user', K_FONT_SIZE = 'cs-font', K_FONT_FAMILY = 'cs-ff', K_PLAIN = 'cs-plain', K_MOUSE = 'cs-glow';
     var root = document.documentElement;
     /* التوهج اللي بيتبع الماوس بيشتغل بس على الأجهزة اللي فيها ماوس ومن غير "تقليل الحركة" */
@@ -35,7 +36,7 @@
     function get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
     function set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
     function del(k) { try { localStorage.removeItem(k); } catch (e) {} }
- 
+
     /* ---------- تطبيق الإعدادات المحفوظة فوراً (قبل ما الصفحة تظهر = من غير وميض) ---------- */
     var curTheme = get(K_THEME) || 'ocean';
     var curFontFamily = get(K_FONT_FAMILY);
@@ -45,7 +46,7 @@
     if (curFontFamily !== 'tajawal') root.setAttribute('data-font', curFontFamily);
     root.style.fontSize = font + '%';
     if (get(K_PLAIN) === '1') root.classList.add('fm-plain');
- 
+
     var ICON = {
         user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>',
         gear: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
@@ -53,7 +54,7 @@
         share: '<svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>',
         up: '<svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>'
     };
- 
+
     function init() {
         /* ---------- التنسيق ---------- */
         var fontRules = FONTS.slice(1).map(function (f) {
@@ -119,7 +120,7 @@
             '@media(max-width:600px){.fm-bar{right:6px;padding:8px 6px;gap:6px}.fm-btn{width:34px;height:34px}.fm-btn::after{display:none}.fm-panel{right:58px;width:220px}}' +
             '@media print{.fm-bar,.fm-panel,.fm-overlay,.fm-toast,.mouse-glow{display:none!important}}';
         document.head.appendChild(css);
- 
+
         /* ---------- القائمة ---------- */
         var bar = document.createElement('div');
         bar.className = 'fm-bar';
@@ -129,13 +130,13 @@
             '<button type="button" class="fm-btn" id="fmSettings" data-tip="الإعدادات" aria-label="الإعدادات" aria-expanded="false">' + ICON.gear + '</button>' +
             '<button type="button" class="fm-btn" id="fmShare" data-tip="مشاركة الموقع" aria-label="مشاركة الموقع">' + ICON.share + '</button>' +
             '<button type="button" class="fm-btn" id="fmTop" data-tip="لأعلى الصفحة" aria-label="لأعلى الصفحة">' + ICON.up + '</button>';
- 
+
         var colorPanel = document.createElement('div');
         colorPanel.className = 'fm-panel';
         colorPanel.setAttribute('role', 'dialog');
         colorPanel.setAttribute('aria-label', 'ألوان الموقع');
         colorPanel.innerHTML = '<h4 style="margin-bottom:10px">لون الموقع</h4><div class="fm-row" id="fmThemes" style="margin-bottom:0"></div>';
- 
+
         var panel = document.createElement('div');
         panel.className = 'fm-panel';
         panel.setAttribute('role', 'dialog');
@@ -150,24 +151,24 @@
             '<button type="button" class="fm-sw" id="fmPlain" role="switch" aria-checked="false">إخفاء التوهج والمثلثات<i></i></button>' +
             (CAN_GLOW ? '<button type="button" class="fm-sw" id="fmMouse" role="switch" aria-checked="false">توهج يتبع الماوس<i></i></button>' : '') +
             '<button type="button" class="fm-small fm-reset" id="fmResetAll">إعادة ضبط الإعدادات</button>'
- 
+
         var toastEl = document.createElement('div');
         toastEl.className = 'fm-toast';
         toastEl.setAttribute('role', 'status');
         toastEl.setAttribute('aria-live', 'polite');
- 
+
         var overlay = document.createElement('div');
         overlay.className = 'fm-overlay';
         overlay.innerHTML = '<div class="fm-modal" role="dialog" aria-modal="true" aria-labelledby="fmTitle"><button type="button" class="fm-close" aria-label="إغلاق">&times;</button><div id="fmBody"></div></div>';
- 
+
         document.body.appendChild(bar);
         document.body.appendChild(colorPanel);
         document.body.appendChild(panel);
         document.body.appendChild(toastEl);
         document.body.appendChild(overlay);
- 
+
         var loginBtn = bar.querySelector('#fmLogin'), setBtn = bar.querySelector('#fmSettings'), colorBtn = bar.querySelector('#fmColors'), shareBtn = bar.querySelector('#fmShare');
- 
+
         /* ---------- الثيم ---------- */
         /* ---------- بوستر الفيديو الرئيسي بيتغيّر مع الثيم ---------- */
         var heroVideo = document.querySelector('.hero-video video');
@@ -180,7 +181,7 @@
             im.onload = function () { heroVideo.setAttribute('poster', src); };
             im.src = src;
         }
- 
+
         function applyTheme(id) { curTheme = id; root.setAttribute('data-theme', id); set(K_THEME, id); markThemes(); updatePoster(id); }
         var themeRow = colorPanel.querySelector('#fmThemes');
         THEMES.forEach(function (t) {
@@ -195,7 +196,7 @@
         }
         markThemes();
         updatePoster(curTheme);
- 
+
         /* ---------- نوع الخط ---------- */
         var loadedFonts = {};
         function loadFont(id) {   /* بنحمّل الخط من Google أول ما يتختار بس، عشان الموقع يفضل خفيف */
@@ -227,13 +228,13 @@
         }
         markFonts();
         loadFont(curFontFamily);
- 
+
         /* ---------- حجم الخط ---------- */
         function applyFontSize(v) { font = Math.min(130, Math.max(85, v)); root.style.fontSize = font + '%'; set(K_FONT_SIZE, font); }
         panel.querySelector('#fmFontUp').onclick = function () { applyFontSize(font + 5); };
         panel.querySelector('#fmFontDown').onclick = function () { applyFontSize(font - 5); };
         panel.querySelector('#fmFontReset').onclick = function () { applyFontSize(100); };
- 
+
         /* ---------- إخفاء التوهج والمثلثات ---------- */
         var plainBtn = panel.querySelector('#fmPlain');
         function applyPlain(on) {
@@ -243,7 +244,7 @@
         }
         applyPlain(root.classList.contains('fm-plain'));
         plainBtn.onclick = function () { applyPlain(!root.classList.contains('fm-plain')); };
- 
+
         /* ---------- توهج يتبع الماوس ---------- */
         var mouseOn = get(K_MOUSE) === '1';   /* مقفول افتراضياً: بيشتغل بس لو الزائر فعّله */
         var mouseBtn = panel.querySelector('#fmMouse');
@@ -277,7 +278,7 @@
             applyFontSize(100); applyFontFamily('tajawal'); applyPlain(false); applyMouse(false);
             toast('تمت إعادة ضبط الإعدادات');
         };
- 
+
         /* ---------- المشاركة ---------- */
         var toastT;
         function toast(msg) {
@@ -306,7 +307,7 @@
                 fallback();
             }
         };
- 
+
         /* ---------- تسجيل الدخول (تجريبي: بيتحفظ على الجهاز فقط) ---------- */
         function user() { try { return JSON.parse(get(K_USER)); } catch (e) { return null; } }
         function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -348,7 +349,7 @@
         overlay.querySelector('.fm-close').onclick = closeModal;
         overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
         refreshLoginBtn();
- 
+
         /* ---------- فتح وقفل اللوحات ولأعلى ---------- */
         function closePanel() {
             colorPanel.classList.remove('open'); panel.classList.remove('open');
@@ -367,8 +368,8 @@
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape') { closePanel(); if (overlay.classList.contains('open')) closeModal(); } });
         bar.querySelector('#fmTop').onclick = function () { window.scrollTo({ top: 0, behavior: 'smooth' }); };
     }
- 
+
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
     else init();
 })();
- 
+
