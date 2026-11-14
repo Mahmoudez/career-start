@@ -1,0 +1,41 @@
+.career-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 2147483647;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    isolation: isolate;
+    color: #fff;
+    background: radial-gradient(ellipse at 50% 48%, color-mix(in srgb, var(--hero-2, #240d30) 76%, #080912), #05060d 76%);
+    font-family: inherit;
+    direction: ltr;
+    opacity: 1;
+    transform: scale(1);
+}
+.career-intro.is-exiting { opacity: 0; transform: scale(1.035); transition: opacity 800ms ease, transform 800ms ease; }
+.career-intro__glow { position: absolute; z-index: -1; width: min(58vw, 680px); aspect-ratio: 1; border-radius: 50%; opacity: .19; filter: blur(80px); background: var(--accent, #38bdf8); animation: intro-float 12s ease-in-out infinite alternate; }
+.career-intro__glow--one { top: -22%; left: -10%; }
+.career-intro__glow--two { right: -12%; bottom: -30%; background: var(--accent-2, #34d399); animation-delay: -6s; }
+.career-intro__grain { position: absolute; inset: 0; z-index: -1; opacity: .2; background-image: radial-gradient(color-mix(in srgb, var(--accent-light, #7dd3fc) 48%, transparent) .7px, transparent .7px); background-size: 31px 31px; mask-image: radial-gradient(ellipse, #000, transparent 76%); }
+.career-intro__content { width: min(100% - 40px, 1120px); text-align: center; }
+.career-intro__title { margin: 0; font-size: clamp(2.15rem, 6.1vw, 5.6rem); line-height: 1.12; letter-spacing: -.055em; font-weight: 600; text-wrap: balance; }
+.career-intro__word { display: inline-block; margin-inline-end: .24em; opacity: 0; transform: translateY(24px); filter: blur(9px); animation: intro-reveal 850ms cubic-bezier(.2,.75,.2,1) forwards; animation-delay: var(--word-delay); }
+.career-intro__highlight { background: linear-gradient(105deg, var(--accent-light, #7dd3fc), var(--accent, #38bdf8), var(--accent-2, #34d399), var(--accent-light, #7dd3fc)); background-size: 240% 100%; background-clip: text; -webkit-background-clip: text; color: transparent; animation: intro-reveal 850ms cubic-bezier(.2,.75,.2,1) forwards, intro-shimmer 5s linear 1.8s infinite; animation-delay: var(--word-delay), 1.8s; }
+.career-intro__skip { position: absolute; inset-inline-end: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); padding: 10px 15px; color: rgba(255,255,255,.84); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.07); font: inherit; font-size: .88rem; cursor: pointer; transition: background 180ms ease, color 180ms ease; }
+.career-intro__skip:hover { color: #fff; background: rgba(255,255,255,.14); }
+.career-intro__skip:focus-visible { outline: 3px solid var(--accent-light, #7dd3fc); outline-offset: 4px; }
+.career-intro__progress { position: absolute; inset-inline: 0; bottom: 0; height: 2px; background: rgba(255,255,255,.12); }
+.career-intro__progress-fill { width: 100%; height: 100%; transform: scaleX(0); transform-origin: left center; background: linear-gradient(90deg, var(--accent-dark, #0284c7), var(--accent-light, #7dd3fc), var(--accent-2, #34d399)); animation: intro-progress var(--intro-duration, 10s) linear forwards; }
+@keyframes intro-reveal { to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+@keyframes intro-progress { to { transform: scaleX(1); } }
+@keyframes intro-float { from { transform: translate3d(-3%, 1%, 0) scale(.95); } to { transform: translate3d(7%, -5%, 0) scale(1.08); } }
+@keyframes intro-shimmer { to { background-position: 240% center; } }
+@media (max-width: 480px) { .career-intro__content { width: calc(100% - 36px); } .career-intro__title { letter-spacing: -.04em; } .career-intro__skip { inset-inline-end: 18px; bottom: max(18px, env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce) {
+    .career-intro__glow { animation: none; }
+    .career-intro__word, .career-intro__highlight { opacity: 1; transform: none; filter: none; animation: intro-static-fade 500ms ease both; animation-delay: 0ms; }
+    .career-intro__progress-fill { animation-duration: var(--intro-duration, 10s); }
+    .career-intro.is-exiting { transition-duration: 800ms; }
+}
+@keyframes intro-static-fade { from { opacity: 0; } to { opacity: 1; } }
