@@ -23,7 +23,6 @@
         purple:  'assets/main_poster_purple.jpg',
         sunset:  'assets/main_poster_sunset.jpg',
         rose:    'assets/main_poster_rose.jpg',
-        black:   'assets/main_poster_black.jpg'
     };
  
     /* بيانات "عن المنصة" (تظهر في آخر الإعدادات): غيّريها زي ما تحبي */
