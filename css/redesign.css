@@ -3,7 +3,7 @@
 * { box-sizing:border-box }
 [hidden] { display:none!important }
 html { scroll-behavior:smooth; scroll-padding-top:6rem; font-family:var(--font-body) }
-body { margin:0; background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:var(--text-md); line-height:1.8; overflow-x:clip }
+body { margin:0; padding-block-end:5rem; background:var(--bg); color:var(--text); font-family:var(--font-body); font-size:var(--text-md); line-height:1.8; overflow-x:clip }
 body::selection { background:var(--brand); color:var(--brand-ink) }
 :focus-visible { outline:3px solid var(--focus)!important; outline-offset:3px!important }
 a { color:var(--brand); text-underline-offset:.2em }
@@ -23,6 +23,7 @@ button,a,summary { -webkit-tap-highlight-color:transparent }
 .navbar nav a.nav-cta { background:var(--brand); color:var(--brand-ink); font-weight:800; margin-inline-start:.35rem }
 .nav-toggle { display:none; min-width:44px; min-height:44px; border:1px solid var(--line); border-radius:12px; color:var(--text); background:var(--surface); cursor:pointer }
 main { position:relative; z-index:1 }
+.bg-decorations,.tech-bg-grid,.orb-top-left,.orb-bottom-right { display:none!important }
 main > section,.section-container,.cv-section,.field-map-section,.media-gallery-section,.faq-section { width:min(var(--page-width), calc(100% - 2.5rem)); margin-inline:auto; padding-block:clamp(3.5rem,8vw,7rem) }
 .hero-section { width:100%; min-height:min(690px,calc(100svh - 76px)); padding:clamp(3rem,7vw,6.5rem) max(5vw,calc((100vw - var(--page-width))/2)); display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(2rem,5vw,5rem); background:radial-gradient(ellipse at 78% 22%,color-mix(in srgb,var(--brand) 23%,transparent),transparent 38%),var(--bg); color:var(--text) }
 .hero-text { min-width:0; max-width:630px }
@@ -92,12 +93,17 @@ main > section,.section-container,.cv-section,.field-map-section,.media-gallery-
 .quiz-heading p,.quiz-status,.quiz-progress-row,.score-label,.result-head p { color:var(--text-muted) }
 .quiz-progress { height:16px;background:var(--surface-soft) }
 .quiz-progress span,.score-track span,.progress-track span { background:var(--brand);transition:width .7s var(--ease) }
+.score-track span { transform-origin:left;animation:scoreReveal .8s var(--ease) both }
+@keyframes scoreReveal { from { transform:scaleX(0) } to { transform:scaleX(1) } }
 .answer-option { min-height:56px;background:var(--bg);border-color:var(--line);color:var(--text) }
 .quiz-button,.quiz-result a { min-height:48px;border-radius:12px }
 .quiz-button.primary,.quiz-result a { background:var(--brand);color:var(--brand-ink) }
 .quiz-button.secondary,.result-actions .secondary-link { color:var(--text);border-color:var(--line) }
 .results-container { background:var(--surface);color:var(--text);border:1px solid var(--line);border-top:3px solid var(--brand) }
 .results-container h3 { color:var(--text) }
+.career-form { background:var(--surface);color:var(--text);border:1px solid var(--line);box-shadow:var(--shadow-soft) }
+.career-form label,.career-form .form-group label { color:var(--text) }
+.career-form input,.career-form select { background:var(--bg);color:var(--text);border-color:var(--line) }
 .roadmaps-page { width:min(var(--page-width),calc(100% - 2rem));padding-block:3rem 5rem }
 .roadmap-panel,.stage-card,.roadmap-content { background:var(--surface)!important;color:var(--text)!important;border-color:var(--line)!important }
 .roadmap-heading h2,.stage-title-row h3 { color:var(--text)!important }.roadmap-heading p,.progress-copy span,.stage-body p { color:var(--text-muted)!important }

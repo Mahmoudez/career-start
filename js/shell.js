@@ -63,6 +63,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const colors = bar.querySelector('#fmColors');
     if (colors) colors.setAttribute('aria-label', 'تغيير المظهر');
     bar.append(help);
+    const hero = document.querySelector('.hero-section');
+    if (hero) {
+      bar.hidden = true;
+      const updateVisibility = () => {
+        const rect = hero.getBoundingClientRect();
+        bar.hidden = rect.bottom > 0 && rect.top < window.innerHeight;
+      };
+      let scheduled = false;
+      window.addEventListener('scroll', () => {
+        if (scheduled) return;
+        scheduled = true;
+        requestAnimationFrame(() => { scheduled = false; updateVisibility(); });
+      }, { passive:true });
+      window.addEventListener('resize', updateVisibility, { passive:true });
+      updateVisibility();
+    }
   }
   };
   window.setTimeout(setupUtility, 0);
